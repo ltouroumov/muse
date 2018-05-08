@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="grid-container-fluid">
+    <div class="grid-y grid-padding-y grid-padding-x">
+        <div class="cell shrink">
+            <h1>Projects</h1>
+            <a class="button" href="{{ url_for('new_project') }}">
+                <i class="fas fa-plus"></i> New Project
+            </a>
+        </div>
+        <div class="cell">
+            {% for project in projects %}
+            <div class="media-object">
+                <div class="media-object-section">
+                    <i class="fas fa-book fa-5x"></i>
+                </div>
+                <div class="media-object-section main-section">
+                    <h4>{{ project.name }}</h4>
+                    <small>Words: 10k (Goal: 75k), Documents: 7, Created: {{ project.date_created }}</small>
+                    <p>{{ project.summary }}</p>
+                </div>
+                <div class="media-object-section align-self-bottom">
+                    <a class="button" href="{{ url_for('editor', project_id=project.id) }}">
+                        <i class="fas fa-pencil-alt"></i> Open
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

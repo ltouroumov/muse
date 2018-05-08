@@ -1,0 +1,21 @@
+div.documents-tree {
+
+}
+
+div.document > div.info {
+    border-bottom: 1px solid #eee;
+}
+
+div.document > div.info > a.name {
+    display: block;
+    font-weight: bold;
+}
+
+div.document > div.info > a.stats {
+    font-size: 0.75em;
+    color: #aaa;
+}
+
+div.document > div.document {
+    margin-left: 10px;
+}

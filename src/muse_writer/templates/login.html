@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body_class %}login-body{% endblock %}
+{% block body %}
+<div class="card login-form">
+    <div class="card-divider">
+        Login
+    </div>
+    <div class="card-section">
+        <form method="post">
+            <label>
+                Username
+                <input type="text" name="username" placeholder="Username ..." />
+            </label>
+            <label>
+                Password
+                <input type="password" name="password" placeholder="Password ..." />
+            </label>
+            <button class="button" type="submit">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
