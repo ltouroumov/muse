@@ -7,7 +7,9 @@
      data-path="{{ node.document.path }}"
      data-sort="{{ node.document.sort }}">
     <div class="info doc-{{ node.document.type }}">
+        <span class="icon"><i class="fas fa-file"></i></span>
         <a class="name">{{ node.document.name }}</a>
+        <a class="options"><i class="fas fa-cog"></i></a>
     </div>
     {% if node.children|length > 0 %}
     {{ make_nodes(node.children) }}
@@ -20,29 +22,35 @@
 <div class="grid-y medium-grid-frame">
     <div class="cell shrink header medium-cell-block-container">
         <h1>{{ project.name }}</h1>
-        <div class="grid-x grid-padding-x">
-            <div class="cell medium-4">
-                <div class="button-group tiny">
-                    <a class="button tiny">
-                        <i class="fas fa-folder"></i> Add Folder
-                    </a>
-                    <a class="button tiny">
-                        <i class="fas fa-file"></i> Add Folder
-                    </a>
-                </div>
-            </div>
-            <div class="cell medium-8">
-                Toolbar (Editor)
-            </div>
-        </div>
     </div>
     <div class="cell medium-auto medium-cell-block-container">
         <div class="grid-x grid-padding-x">
-            <div class="cell medium-4 medium-cell-block-y documents-tree">
-                {{ make_nodes(project.documents_tree()) }}
+            <div class="cell large-2 medium-4 medium-cell-block-container">
+                <div class="grid-y">
+                    <div class="cell shrink">
+                        <div class="button-group tiny">
+                            <a class="button tiny">
+                                <i class="fas fa-folder"></i> Add Folder
+                            </a>
+                            <a class="button tiny">
+                                <i class="fas fa-file"></i> Add Document
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cell auto documents-tree">
+                        {{ make_nodes(project.documents_tree()) }}
+                    </div>
+                </div>
             </div>
-            <div class="cell medium-8 medium-cell-block-y">
-                Editor
+            <div class="cell large-10 medium-8 medium-cell-block-container">
+                <div class="grid-y">
+                    <div class="cell shrink">
+                        Editor Toolbar
+                    </div>
+                    <div class="cell auto documents-editor">
+                        Editor
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -50,5 +58,9 @@
 {% endblock %}
 {% block scripts %}
 {{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    project_url = "{{ url_for('editor_async', project_id=project.id) }}";
+</script>
 <script src="{{ url_for('static', filename='editor.js') }}"></script>
 {% endblock %}

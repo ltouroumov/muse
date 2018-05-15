@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request, redirect, url_for
+import jsonpickle
+from flask import Flask, render_template, request, redirect, url_for, json, jsonify
 from sqlalchemy import create_engine
 
 from muse_writer.data import session, setup_db, init_db
@@ -28,6 +29,26 @@ def editor(project_id):
     project = session.query(Project).filter_by(id=project_id).first()
     return render_template('editor.html',
                            project=project)
+
+
+@app.route('/project/<int:project_id>/async')
+def editor_async(project_id):
+    project = session.query(Project).filter_by(id=project_id).first()
+
+    print(request.args, request.form)
+    action = request.args.get('action')
+
+    if action == 'doc-tree':
+        doc_tree = project.documents_tree()
+        from muse_writer.encoders import DocumentTreeEncoder
+        return DocumentTreeEncoder().encode(doc_tree)
+    elif action == 'doc-meta':
+        doc_id = request.args.get('doc_id')
+        document = project.documents.filter_by(id=doc_id).first()
+        from muse_writer.encoders import DocumentMetaEncoder
+        return DocumentMetaEncoder().encode(document)
+    else:
+        return jsonpickle.encode({"project": project.id})
 
 
 @app.route('/project/new', methods=['GET', 'POST'])

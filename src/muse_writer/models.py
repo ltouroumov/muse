@@ -16,13 +16,13 @@ class Project(Base):
     date_created = Column(DateTime)
     date_edited = Column(DateTime, nullable=True)
 
-    documents = relationship('Document')
+    documents = relationship('Document', lazy='dynamic')
 
     def documents_tree(self):
         root = []
         parents = {}
         for doc in sorted(self.documents, key=lambda d: len(d.path)):
-            node = Node(document=doc, children=[])
+            node = ProjectNode(document=doc, children=[])
             parents["%s/%d" % (doc.path if doc.path != '/' else '', doc.id)] = node
             if doc.path == '/':
                 root.append(node)
@@ -33,8 +33,10 @@ class Project(Base):
         return root
 
 
-Node = namedtuple('ProjectNode',
-                  ['document', 'children'])
+class ProjectNode:
+    def __init__(self, document, children):
+        self.document = document
+        self.children = children
 
 
 class Document(Base):

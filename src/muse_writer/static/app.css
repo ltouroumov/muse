@@ -4,9 +4,11 @@ div.documents-tree {
 
 div.document > div.info {
     border-bottom: 1px solid #eee;
+    display: flex;
 }
 
 div.document > div.info > a.name {
+    flex-grow: 1;
     display: block;
     font-weight: bold;
 }
@@ -14,6 +16,15 @@ div.document > div.info > a.name {
 div.document > div.info > a.stats {
     font-size: 0.75em;
     color: #aaa;
+}
+
+div.document > div.info > a.options {
+    flex-grow: 0;
+}
+
+div.document > div.info > span.icon {
+    flex-grow: 0;
+    margin-right: 0.25rem;
 }
 
 div.document > div.document {
